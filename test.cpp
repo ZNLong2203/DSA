@@ -1,53 +1,34 @@
 #include<bits/stdc++.h>
-
+#define ll long long
 using namespace std;
 
-#define mp make_pair
-#define fi first
-#define se second
-#define pb push_back
-#define sz size()
-#define ll long long
-#define FOR(i, a, b) for(int i = a; i <= b; i++)
-#define FORD(i, a, b) for(int i = a; i >= b; i--)
-#define F(i, a, b) for(int i = a; i < b; ++i)
-#define FD(i, a, b) for(int i = a; i > b; --i)
-#define faster() ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-#define vi vector<int>
-#define vll vector<ll>
-#define all(x) (x).begin(), (x).end()
-#define endl '\n'
-
-vector<vi> edge(100005);
-bitset<100005> visited;
-
-void DFS(int u)
-{
-    visited[u] = 1;
-    cout << u << ' ';
-    for(int i = 0; i < edge[u].sz; ++i) if(!visited[edge[u][i]]) DFS(edge[u][i]);
+void solve() {
+	ll a,b;
+	cin >> a >> b;
+	queue<pair<ll,ll>> q;
+	map<ll,ll> mp;
+	q.push({a,0});
+	while(q.size()!=0) {
+		ll f = q.front().first;
+		ll s = q.front().second;
+		q.pop();
+		if(f==b) {
+			cout << s << endl;
+			return;
+		}
+		if(f<=b && !mp[f*2]) {
+			mp[f*2]++;
+			q.push({f*2,s+1});
+		}
+		if(f>=1 && !mp[f-1]) {
+			mp[f-1]++;
+			q.push({f-1,s+1});
+		}
+	}
 }
 
-int main()
-{
-    faster();
-    int t = 1, n, m, x, y, u;
-    cin >> t;
-    while(t--)
-    {
-        cin >> n >> m >> u;
-        for(int i = 1; i <= n; ++i)
-        {
-            edge[i].clear();
-            visited[i] = 0;
-        }
-        while(m--)
-        {
-            cin >> x >> y;
-            edge[x].pb(y);
-        }
-        DFS(u);
-        cout << endl;
-    }
-    return 0;
+int main() {
+	int t;
+	cin >> t;
+	while(t--) solve();
 }
